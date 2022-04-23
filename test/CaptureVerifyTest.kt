@@ -41,4 +41,3 @@ class CaptureVerifyTest {
         check(1 == 2) { "The check has failed" }
     }
 }
-

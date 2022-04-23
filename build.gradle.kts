@@ -17,7 +17,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
     gradlePluginPortal()
 }
 
@@ -26,15 +25,21 @@ allprojects {
     apply(plugin = "org.gradle.maven-publish")
 
     repositories {
-        jcenter()
         mavenCentral()
     }
 
     dependencies {
+        implementation(platform(kotlin("bom")))
         implementation(kotlin("stdlib-jdk8"))
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1")
         implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.1")
         testImplementation(kotlin("test-junit"))
+
+//        runtimeOnly("org.jetbrains.kotlin:kotlin-main-kts")
+//        runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223")
+        testRuntimeOnly("org.jetbrains.kotlin:kotlin-main-kts")
+        testRuntimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223")
+
     }
     
     tasks.withType<KotlinCompile> {
