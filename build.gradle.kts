@@ -17,7 +17,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
     gradlePluginPortal()
 }
 
@@ -26,7 +25,6 @@ allprojects {
     apply(plugin = "org.gradle.maven-publish")
 
     repositories {
-        jcenter()
         mavenCentral()
     }
 
@@ -37,12 +35,20 @@ allprojects {
         testImplementation(kotlin("test-junit"))
     }
 
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    
     tasks.withType<KotlinCompile> {
         kotlinOptions.apply {
             languageVersion = "1.4"
             jvmTarget = "1.8"
             allWarningsAsErrors = true
-            freeCompilerArgs = freeCompilerArgs + listOf("-Xsuppress-version-warnings") // suppress deprecated 1.4
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-Xsuppress-version-warnings", // suppress deprecated 1.4
+                "-opt-in=kotlin.RequiresOptIn" // remove after updating languageVersion to 1.7
+            )
         }
     }
 
